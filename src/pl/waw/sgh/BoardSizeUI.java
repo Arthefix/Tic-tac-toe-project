@@ -18,7 +18,7 @@ public class BoardSizeUI {
     public static void main() {
         BoardSizeUI boardSizeUI = new BoardSizeUI();
         frame.setContentPane(boardSizeUI.panel1);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 

@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class GameOptionsUI {
     private JPanel panel1;
-    JTextField boardSizeTextField;
+    private JTextField boardSizeTextField;
     private JCheckBox aiCheckBox;
     private JButton backButton;
     private JButton playButton;
@@ -22,7 +22,7 @@ public class GameOptionsUI {
     public static void main(boolean diff) {
         GameOptionsUI gameOptionsUI = new GameOptionsUI();
         frame.setContentPane(gameOptionsUI.panel1);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
@@ -69,8 +69,11 @@ public class GameOptionsUI {
                 System.exit(0);
             }
         });
-        if (diff) gameOptionsUI.boardSizeTextField.setText("3x3");
-        else gameOptionsUI.boardSizeTextField.setText("5x5");
+        if (diff) gameOptionsUI.getBoardSizeTextField().setText("3x3");
+        else gameOptionsUI.getBoardSizeTextField().setText("5x5");
+
+
+
 
     }
 
