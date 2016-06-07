@@ -17,4 +17,16 @@ public class Player {
     public void artInt(int dx, int dy){
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isAi() {
+        return ai;
+    }
+
+    public char getCounter() {
+        return counter;
+    }
 }

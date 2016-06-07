@@ -3,6 +3,8 @@ package pl.waw.sgh;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Random;
 
 /**
@@ -27,8 +29,7 @@ public class GameOptionsUI {
         frame.setVisible(true);
 
 
-        // --begin--
-        //Players
+        // --begin-- //Players
         Random rand = new Random();
         char counter1, counter2;
         if (rand.nextInt(1) == 0) {
@@ -44,9 +45,7 @@ public class GameOptionsUI {
             player2 = new Player("Computer", true, counter2);
         else
             player2 = new Player(gameOptionsUI.getPlayer2Name().toString(), false, counter2);
-        //Players
         // --end--
-
 
 
         gameOptionsUI.getBackButton().addActionListener(new ActionListener() {
@@ -61,6 +60,10 @@ public class GameOptionsUI {
             public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
 
+                if (diff)
+                    GameBoardUI(3);
+                else
+                    GameBoardUI(5);
             }
         });
         gameOptionsUI.getExitButton().addActionListener(new ActionListener() {
@@ -71,6 +74,17 @@ public class GameOptionsUI {
         });
         if (diff) gameOptionsUI.getBoardSizeTextField().setText("3x3");
         else gameOptionsUI.getBoardSizeTextField().setText("5x5");
+
+        // --begin-- // no player2 name if AI selected
+        ItemListener itemListener = new ItemListener()
+        {
+            public void itemStateChanged(ItemEvent ie)
+            {
+                gameOptionsUI.getPlayer2Name().setEnabled(ie.getStateChange() == ItemEvent.DESELECTED);
+            }
+        };
+        gameOptionsUI.getAiCheckBox().addItemListener(itemListener);
+        // --end--
 
 
 
