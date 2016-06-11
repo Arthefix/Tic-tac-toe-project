@@ -1,21 +1,79 @@
 package pl.waw.sgh;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * Created by harib on 07.06.2016.
  */
 public class GameBoard {
 
-    private int[][] board;
-    private int size;
+    private static int[][] board;
+    private static int size;
 
-    public void main(int boardSize) {
+    public static void main(int boardSize) {
         size = boardSize;
         board = createBoard(size);
         int maxMoves = size * size;
 
+        JFrame frame = new JFrame();
+        frame.setTitle("Tic tac toe");
+
+        frame.setMinimumSize(new Dimension(300, 300));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        LayoutManager layoutManager = new GridLayout(3, 0);
+        frame.setLayout(layoutManager);
+
+
+        JPanel topPanel = new JPanel();
+        JLabel movesPlayer = new JLabel("Moves player:");
+        JTextField whichPlayer = new JTextField();
+        whichPlayer.setEnabled(false);
+
+        topPanel.add(movesPlayer);
+        topPanel.add(whichPlayer);
+
+
+        // -- ACTUAL GAMEBOARD --
+        JPanel gameBoardPanel = new JPanel();
+
+
+
+        JPanel bottomPanel = new JPanel();
+        JButton backButton = new JButton("Back");
+        JButton exitButton = new JButton("Exit");
+
+        bottomPanel.add(backButton);
+        bottomPanel.add(exitButton);
+
+
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                GameOptionsUI.frame.setVisible(true);
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+
+        frame.getContentPane().add(topPanel);
+        frame.getContentPane().add(gameBoardPanel);
+        frame.getContentPane().add(bottomPanel);
+
+        frame.setVisible(true);
     }
 
-    private int[][] createBoard(int size) {
+    private static int[][] createBoard(int size) {
         return new int[size][size];
     }
 

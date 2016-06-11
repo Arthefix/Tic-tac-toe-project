@@ -61,9 +61,9 @@ public class GameOptionsUI {
                 frame.setVisible(false);
 
                 if (diff)
-                    GameBoardUI(3);
+                    GameBoard.main(3);
                 else
-                    GameBoardUI(5);
+                    GameBoard.main(5);
             }
         });
         gameOptionsUI.getExitButton().addActionListener(new ActionListener() {
