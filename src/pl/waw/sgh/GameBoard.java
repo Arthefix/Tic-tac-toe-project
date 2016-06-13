@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by harib on 07.06.2016.
@@ -39,6 +41,44 @@ public class GameBoard {
 
         // -- ACTUAL GAMEBOARD --
         JPanel gameBoardPanel = new JPanel();
+        LayoutManager gameLayoutManager = new GridLayout(3, 3);
+        gameBoardPanel.setLayout(gameLayoutManager);
+        GameButton[][] gameBoard = new GameButton[3][3];
+        for (int i=0; i<3; i++)
+            for (int j=0; j<3; j++){
+                gameBoard[i][j] = new GameButton();                             //gameboard 3x3 full of "." marks
+                gameBoard[i][j].setCounter('.');
+                gameBoard[i][j].setText(".");
+                gameBoardPanel.add(gameBoard[i][j]);
+
+                gameBoard[i][j].addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                                                                                // win conditions check
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                });
+            }
 
 
 
