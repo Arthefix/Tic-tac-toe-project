@@ -14,6 +14,8 @@ public class GameBoard {
 
     private static int[][] board;
     private static int size;
+    private static int i, j; //iterators
+    private static Player player = null;
 
     public static void main(int boardSize) {
         size = boardSize;
@@ -41,12 +43,12 @@ public class GameBoard {
 
         // -- ACTUAL GAMEBOARD --
         JPanel gameBoardPanel = new JPanel();
-        LayoutManager gameLayoutManager = new GridLayout(3, 3);
+        LayoutManager gameLayoutManager = new GridLayout(boardSize, boardSize);
         gameBoardPanel.setLayout(gameLayoutManager);
-        GameButton[][] gameBoard = new GameButton[3][3];
-        for (int i=0; i<3; i++)
-            for (int j=0; j<3; j++){
-                gameBoard[i][j] = new GameButton();                             //gameboard 3x3 full of "." marks
+        GameButton[][] gameBoard = new GameButton[boardSize][boardSize];
+        for (i=0; i<boardSize; i++)
+            for (j=0; j<boardSize; j++){
+                gameBoard[i][j] = new GameButton();                             //gameboard full of "." marks
                 gameBoard[i][j].setCounter('.');
                 gameBoard[i][j].setText(".");
                 gameBoardPanel.add(gameBoard[i][j]);
@@ -56,6 +58,10 @@ public class GameBoard {
                     public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
                                                                                 // win conditions check
 
+                        if (GameBoard.winConditions(player, maxMoves, i, j) == -1)
+                            //remis
+                        else if (GameBoard.winConditions(player, maxMoves, i, j) == 1)
+                            //player wins
                     }
 
                     @Override
@@ -117,17 +123,47 @@ public class GameBoard {
         return new int[size][size];
     }
 
-    private int winConditions(Player player, int moves, int x, int y) {
-        if (result(x, y, player.getCounter()) == 1)
-            return 1; //player wins
-        else if (moves==0)
-            return -1; //koniec gry, remis
-        else
-            return 0; //gramy dalej
+    private static int winConditions(Player player, int moves, int x, int y) {
+        if (size==3) {
+            if (result3(x, y, player.getCounter()) == 1)
+                return 1; //player wins
+            else if (moves==0)
+                return -1; //koniec gry, remis
+            else
+                return 0; //gramy dalej
+        } else{
+            if (result5(x, y, player.getCounter()) == 1)
+                return 1; //player wins
+            else if (moves==0)
+                return -1; //koniec gry, remis
+            else
+                return 0; //gramy dalej
+        }
 
     }
 
-    int result(int x, int y, char counter) {  //4 bloki sprawdzające pion, poziom, dwa skosy
+    private static int result3(int x, int y, char counter) {  //4 bloki sprawdzające pion, poziom, dwa skosy
+        int w = 0;
+        {        //pion
+            w = res(x, y - 2, counter) + res(x, y - 1, counter) + res(x, y + 1, counter) + res(x, y + 2, counter);
+            if (w >= 2) return 1;
+        }
+        {        //poziom
+            w = res(x - 2, y, counter) + res(x - 1, y, counter) + res(x + 1, y, counter) + res(x + 2, y, counter);
+            if (w >= 2) return 1;
+        }
+        {        //skos w prawo
+            w = res(x - 2, y - 2, counter) + res(x - 1, y - 1, counter) + res(x + 1, y + 1, counter) + res(x + 2, y + 2, counter);
+            if (w >= 2) return 1;
+        }
+        {        //skos w lewo
+            w = res(x + 2, y - 2, counter) + res(x + 1, y - 1, counter) + res(x - 1, y + 1, counter) + res(x - 2, y + 2, counter);
+            if (w >= 2) return 1;
+        }
+        return 0;
+    }
+    /// DO OPRACOWANIA!!!
+    private static int result5(int x, int y, char counter) {  //4 bloki sprawdzające pion, poziom, dwa skosy
         int w = 0;
         {        //pion
             w = res(x, y - 2, counter) + res(x, y - 1, counter) + res(x, y + 1, counter) + res(x, y + 2, counter);
@@ -149,7 +185,7 @@ public class GameBoard {
     }
 
 
-    int res(int dx, int dy, char counter) {
+    private static int res(int dx, int dy, char counter) {
         if (dx >= size - 1 || dy >= size - 1 || dx < 0 || dy < 0) {
             return 0;
         } else if (board[dx][dy] == counter) {

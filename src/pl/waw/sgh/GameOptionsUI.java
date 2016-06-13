@@ -20,6 +20,7 @@ public class GameOptionsUI {
     private JTextField player1Name;
     private JTextField player2Name;
     public static JFrame frame = new JFrame("Game options");
+    private static Player player1, player2;
 
     public static void main(boolean diff) {
         GameOptionsUI gameOptionsUI = new GameOptionsUI();
@@ -39,8 +40,8 @@ public class GameOptionsUI {
             counter1 = 'X';
             counter2 = 'O';
         }
-        Player player1 = new Player(gameOptionsUI.getPlayer1Name().toString(), false, counter1);
-        Player player2 = null;
+        player1 = new Player(gameOptionsUI.getPlayer1Name().toString(), false, counter1);
+        player2 = null;
         if (gameOptionsUI.getAiCheckBox().isSelected())
             player2 = new Player("Computer", true, counter2);
         else
@@ -119,4 +120,11 @@ public class GameOptionsUI {
         return boardSizeTextField;
     }
 
+    public static Player getPlayer1() {
+        return player1;
+    }
+
+    public static Player getPlayer2() {
+        return player2;
+    }
 }
