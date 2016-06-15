@@ -16,11 +16,13 @@ public class GameBoard {
     private static int size;
     private static int i, j; //iterators
     private static Player player = null;
+    static GameButton[][] gameBoard;
+    private static int maxMoves;
 
     public static void main(int boardSize) {
         size = boardSize;
         board = createBoard(size);
-        int maxMoves = size * size;
+        maxMoves = size * size;
 
         JFrame frame = new JFrame();
         frame.setTitle("Tic tac toe");
@@ -34,18 +36,26 @@ public class GameBoard {
 
         JPanel topPanel = new JPanel();
         JLabel movesPlayer = new JLabel("Moves player:");
-        JTextField whichPlayer = new JTextField();
+        JLabel whichPlayer = new JLabel();
         whichPlayer.setEnabled(false);
 
         topPanel.add(movesPlayer);
         topPanel.add(whichPlayer);
 
 
+        if (GameOptionsUI.getPlayer1().getCounter() == 'O') {
+            whichPlayer.setText(GameOptionsUI.getPlayer1().getName());
+            player = GameOptionsUI.getPlayer1();
+        } else {
+            whichPlayer.setText(GameOptionsUI.getPlayer2().getName());
+            player = GameOptionsUI.getPlayer2();
+        }
+
         // -- ACTUAL GAMEBOARD --
         JPanel gameBoardPanel = new JPanel();
         LayoutManager gameLayoutManager = new GridLayout(boardSize, boardSize);
         gameBoardPanel.setLayout(gameLayoutManager);
-        GameButton[][] gameBoard = new GameButton[boardSize][boardSize];
+        gameBoard = new GameButton[boardSize][boardSize];
         for (i=0; i<boardSize; i++)
             for (j=0; j<boardSize; j++){
                 gameBoard[i][j] = new GameButton();                             //gameboard full of "." marks
@@ -53,15 +63,24 @@ public class GameBoard {
                 gameBoard[i][j].setText(".");
                 gameBoardPanel.add(gameBoard[i][j]);
 
-                gameBoard[i][j].addMouseListener(new MouseListener() {
+                //WRÓCIĆ DO TEGO
+                /*gameBoard[i][j].addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
                                                                                 // win conditions check
 
+                        gameBoard[k][l].setText(String.valueOf(player.getCounter()));
+                        gameBoard[k][l].setEnabled(false);
+
                         if (GameBoard.winConditions(player, maxMoves, i, j) == -1)
-                            //remis
+                            JOptionPane.showMessageDialog(frame, "Draw", "Draw", JOptionPane.INFORMATION_MESSAGE);
                         else if (GameBoard.winConditions(player, maxMoves, i, j) == 1)
-                            //player wins
+                            JOptionPane.showMessageDialog(frame, player.getName() + " wins!", "End", JOptionPane.INFORMATION_MESSAGE);
+
+                        if (player == GameOptionsUI.getPlayer1())
+                            player = GameOptionsUI.getPlayer2();
+                        else
+                            player = GameOptionsUI.getPlayer1();
                     }
 
                     @Override
@@ -83,9 +102,342 @@ public class GameBoard {
                     public void mouseExited(MouseEvent e) {
 
                     }
-                });
+                });*/
             }
 
+        gameBoard[0][0].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[0][0].setText(String.valueOf(player.getCounter()));
+                gameBoard[0][0].setCounter(player.getCounter());
+                gameBoard[0][0].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 0, 0);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[0][1].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[0][1].setText(String.valueOf(player.getCounter()));
+                gameBoard[0][1].setCounter(player.getCounter());
+                gameBoard[0][1].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 0, 1);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[0][2].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[0][2].setText(String.valueOf(player.getCounter()));
+                gameBoard[0][2].setCounter(player.getCounter());
+                gameBoard[0][2].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 0, 2);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[1][0].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[1][0].setText(String.valueOf(player.getCounter()));
+                gameBoard[1][0].setCounter(player.getCounter());
+                gameBoard[1][0].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 1, 0);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[1][1].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[1][1].setText(String.valueOf(player.getCounter()));
+                gameBoard[1][1].setCounter(player.getCounter());
+                gameBoard[1][1].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 1, 1);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[1][2].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[1][2].setText(String.valueOf(player.getCounter()));
+                gameBoard[1][2].setCounter(player.getCounter());
+                gameBoard[1][2].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 1, 2);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[2][0].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[2][0].setText(String.valueOf(player.getCounter()));
+                gameBoard[2][0].setCounter(player.getCounter());
+                gameBoard[2][0].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 2, 0);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[2][1].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[2][1].setText(String.valueOf(player.getCounter()));
+                gameBoard[2][1].setCounter(player.getCounter());
+                gameBoard[2][1].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 2, 1);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
+        gameBoard[2][2].addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {                    //mouse click results in change of the button text +
+                // win conditions check
+
+                gameBoard[2][2].setText(String.valueOf(player.getCounter()));
+                gameBoard[2][2].setCounter(player.getCounter());
+                gameBoard[2][2].setEnabled(false);
+
+                checkState(frame, player, maxMoves, 2, 2);
+                maxMoves--;
+
+                if (player == GameOptionsUI.getPlayer1())
+                    player = GameOptionsUI.getPlayer2();
+                else
+                    player = GameOptionsUI.getPlayer1();
+                whichPlayer.setText(player.getName());
+
+                if (player.isAi()){
+                    player.artInt(player, gameBoard, frame, maxMoves);
+                    maxMoves--;
+                    if (player == GameOptionsUI.getPlayer1())
+                        player = GameOptionsUI.getPlayer2();
+                    else
+                        player = GameOptionsUI.getPlayer1();
+                }
+                whichPlayer.setText(player.getName());
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {            }
+            @Override
+            public void mouseReleased(MouseEvent e) {            }
+            @Override
+            public void mouseEntered(MouseEvent e) {            }
+            @Override
+            public void mouseExited(MouseEvent e) {            }
+        });
 
 
         JPanel bottomPanel = new JPanel();
@@ -117,10 +469,39 @@ public class GameBoard {
         frame.getContentPane().add(bottomPanel);
 
         frame.setVisible(true);
+
+
+
+
+        //Computer's move in case it begins
+
+        if (player.isAi()) {
+            player.artInt(player, gameBoard, frame, maxMoves);
+            maxMoves--;
+            if (player == GameOptionsUI.getPlayer1())
+                player = GameOptionsUI.getPlayer2();
+            else
+                player = GameOptionsUI.getPlayer1();
+            whichPlayer.setText(player.getName());
+        }
+
     }
 
     private static int[][] createBoard(int size) {
         return new int[size][size];
+    }
+
+    static void checkState(JFrame frame, Player player, int maxMoves, int i, int j){
+        if (GameBoard.winConditions(player, maxMoves, i, j) == -1) {
+            JOptionPane.showMessageDialog(frame, "Draw", "Draw", JOptionPane.INFORMATION_MESSAGE);
+            frame.setVisible(false);
+            BoardSizeUI.frame.setVisible(true);
+        }
+        else if (GameBoard.winConditions(player, maxMoves, i, j) == 1) {
+            JOptionPane.showMessageDialog(frame, player.getName() + " wins!", "End", JOptionPane.INFORMATION_MESSAGE);
+            frame.setVisible(false);
+            BoardSizeUI.frame.setVisible(true);
+        }
     }
 
     private static int winConditions(Player player, int moves, int x, int y) {
@@ -128,16 +509,16 @@ public class GameBoard {
             if (result3(x, y, player.getCounter()) == 1)
                 return 1; //player wins
             else if (moves==0)
-                return -1; //koniec gry, remis
+                return -1; //game over, draw
             else
-                return 0; //gramy dalej
+                return 0; //keeps playing
         } else{
             if (result5(x, y, player.getCounter()) == 1)
                 return 1; //player wins
             else if (moves==0)
-                return -1; //koniec gry, remis
+                return -1; //game over, draw
             else
-                return 0; //gramy dalej
+                return 0; //keeps playing
         }
 
     }
@@ -186,9 +567,9 @@ public class GameBoard {
 
 
     private static int res(int dx, int dy, char counter) {
-        if (dx >= size - 1 || dy >= size - 1 || dx < 0 || dy < 0) {
+        if (dx >= size  || dy >= size  || dx < 0 || dy < 0) {
             return 0;
-        } else if (board[dx][dy] == counter) {
+        } else if (gameBoard[dx][dy].getCounter() == counter) {
             return 1;
         } else return 0;
     }
